@@ -1,0 +1,6 @@
+.env
+data/raw/*
+data/db.sqlite3
+data/logs/*
+__pycache__/
+*.pyc
