@@ -1,7 +1,7 @@
 # MoMo SMS Analytics App
 
 ## Team Name
-(insert name here)
+**Codeizzy**
 
 ## Project Description
 An ETL-based fullstack application for cleaning, categorising, and visualising MoMo SMS transaction data.
@@ -50,10 +50,12 @@ An ETL-based fullstack application for cleaning, categorising, and visualising M
 ```
 
 ## High Level System Architecture
-(insert diagram link here - use Draw.io or Miro)
+Here is the link to the high level system architecture diagram of our MoMo SMS Analytics app.
+https://drive.google.com/file/d/15Wdv7dohUM3AlQf6I7Dvo1iaNmrMPi_R/view?usp=sharing
 
 ## Scrum Board Setup
-(insert board link here - GitHub Projects, Trello, or Jira)
+We are using GitHub Projects to track our progress. 
+https://github.com/users/mackun-ui/projects/1/views/1
 
 ## Team Members
 - David Chukwuebuka Achibiri 
