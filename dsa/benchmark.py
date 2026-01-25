@@ -14,11 +14,11 @@ from typing import List, Dict, Any, Tuple
 # Import from same package
 try:
     from .linear_search import linear_search
-    from .dictionary_lookup import create_transaction_dict, dict_lookup
+    from .dict_lookup import create_transaction_dict, dict_lookup
 except ImportError:
     # Running as script
     from linear_search import linear_search
-    from dictionary_lookup import create_transaction_dict, dict_lookup
+    from dict_lookup import create_transaction_dict, dict_lookup
 
 
 def benchmark_search_methods(transactions: List[Dict[str, Any]], num_searches: int = 100) -> Dict[str, Any]:

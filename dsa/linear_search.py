@@ -4,8 +4,15 @@ Linear Search Implementation - O(n) Time Complexity
 This module implements a sequential search algorithm that iterates through
 each transaction in the list until the target ID is found.
 
+Author: Role A - Data Parsing & DSA Lead
+
 Time Complexity: O(n) - worst case searches entire list
 Space Complexity: O(1) - no additional data structures needed
+
+How it works:
+- Sequentially checks each transaction in the list
+- Compares each ID until match is found
+- Inefficient for large datasets (must check average n/2 items)
 """
 
 from typing import List, Dict, Any, Optional
