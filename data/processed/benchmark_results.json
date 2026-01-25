@@ -2,21 +2,21 @@
   "num_transactions": 1691,
   "num_searches": 100,
   "linear_search": {
-    "total_time": 0.006349700037389994,
-    "average_time": 6.349700037389993e-05,
-    "average_time_ms": 0.06349700037389994,
+    "total_time": 0.005959700036328286,
+    "average_time": 5.959700036328286e-05,
+    "average_time_ms": 0.05959700036328286,
     "complexity": "O(n)"
   },
   "dictionary_lookup": {
-    "dict_creation_time": 0.0007443000213243067,
-    "total_lookup_time": 4.0899962186813354e-05,
-    "average_time": 4.0899962186813357e-07,
-    "average_time_ms": 0.00040899962186813354,
+    "dict_creation_time": 0.0006058000144548714,
+    "total_lookup_time": 2.2799998987466097e-05,
+    "average_time": 2.2799998987466098e-07,
+    "average_time_ms": 0.00022799998987466097,
     "complexity": "O(1)",
-    "total_time_including_creation": 0.0007851999835111201
+    "total_time_including_creation": 0.0006286000134423375
   },
   "comparison": {
-    "speedup_factor": 155.24953319974495,
+    "speedup_factor": 261.3903640787233,
     "faster_method": "dictionary_lookup"
   }
 }
