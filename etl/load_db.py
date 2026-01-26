@@ -1,46 +1,54 @@
 """
-Database loading module
+Database loading module for MySQL
 """
 
-import sqlite3
-from pathlib import Path
-from typing import List, Dict, Any
+import mysql.connector
+from mysql.connector import Error
+from typing import List, Dict, Any, Optional
+import logging
 
-from etl.config import DB_PATH, DB_TABLE_NAME
+from etl.config import DB_CONFIG
+
+logger = logging.getLogger(__name__)
 
 
-def create_connection(db_path: Path = DB_PATH) -> sqlite3.Connection:
+def create_connection() -> Optional[mysql.connector.MySQLConnection]:
     """
-    Create a database connection to SQLite database
+    Create a database connection to MySQL database
     
-    Args:
-        db_path: Path to SQLite database file
-        
     Returns:
-        Connection object
+        Connection object or None if connection fails
     """
-    # TODO: Implement database connection
-    pass
+    try:
+        connection = mysql.connector.connect(**DB_CONFIG)
+        if connection.is_connected():
+            logger.info(f"Successfully connected to MySQL database: {DB_CONFIG['database']}")
+            return connection
+    except Error as e:
+        logger.error(f"Error connecting to MySQL database: {e}")
+        return None
 
 
-def create_tables(conn: sqlite3.Connection):
+def close_connection(conn: mysql.connector.MySQLConnection):
     """
-    Create necessary tables in the database
+    Close database connection
     
     Args:
         conn: Database connection
     """
-    # TODO: Create transactions table with appropriate schema
-    pass
+    if conn and conn.is_connected():
+        conn.close()
+        logger.info("MySQL connection closed")
 
 
-def load_transactions(transactions: List[Dict[str, Any]], db_path: Path = DB_PATH):
+def load_transactions(transactions: List[Dict[str, Any]]):
     """
-    Load multiple transactions into the database
+    Load multiple transactions into the MySQL database
     
     Args:
         transactions: List of transaction dictionaries
-        db_path: Path to SQLite database file
     """
-    # TODO: Implement loading logic
+    # TODO: Implement loading logic with proper error handling
+    # This should insert data into TRANSACTION, USER, CATEGORY tables
+    # based on the schema in database/database_setup.sql
     pass

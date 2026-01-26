@@ -15,7 +15,6 @@ DEAD_LETTER_DIR = LOGS_DIR / "dead_letter"
 
 # File paths
 DEFAULT_XML_PATH = RAW_DIR / "momo.xml"
-DB_PATH = DATA_DIR / "db.sqlite3"
 DASHBOARD_JSON_PATH = PROCESSED_DIR / "dashboard.json"
 ETL_LOG_PATH = LOGS_DIR / "etl.log"
 
@@ -28,5 +27,13 @@ TRANSACTION_CATEGORIES = {
 MIN_AMOUNT = 0
 MAX_AMOUNT = 10000000
 
-# Database settings
-DB_TABLE_NAME = "transactions"
+# MySQL Database settings
+DB_CONFIG = {
+    'host': os.getenv('DB_HOST', 'localhost'),
+    'port': int(os.getenv('DB_PORT', 3306)),
+    'user': os.getenv('DB_USER', 'root'),
+    'password': os.getenv('DB_PASSWORD', ''),
+    'database': os.getenv('DB_NAME', 'momo_sms_analytics'),
+    'charset': 'utf8mb4',
+    'autocommit': False
+}
