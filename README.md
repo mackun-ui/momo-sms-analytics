@@ -58,8 +58,22 @@ We are using GitHub Projects to track our progress.
 https://github.com/users/mackun-ui/projects/1/views/1
 
 ## Database Design Documentation
-Find a detailed explanation and justification for our database design. The SQL to JSON mapping can also be found in this documment.
-https://docs.google.com/document/d/1YlG8lLbFWrPAKPrBINB1VzK7_x01HMSSdu5Z0dNaWBk/edit?usp=sharing
+Find a detailed explanation and justification for our database design in the PDF document in the docs folder.
+```
+├── ...
+├── docs/
+│   ├── momo sms analytics erd.drawio.png
+│   ├── Database Design Documentation.pdf
+```
+
+## SQL to JSON Mapping
+| SQL TABLE            | JSON REPRESENTATION                         | 
+|----------------------|---------------------------------------------|
+| USER                 | USER[], sender, receiver                    | 
+| TRANSACTION          | TRANSACTION[], complete_transaction_example | 
+| CATEGORY             | CATEGORY[], categories[]                    |
+| TRANSACTION_CATEOGRY | This can be seen within categories[]        |
+| LOGS                 | LOG[], logs[]                               |
 
 ## Team Members
 - David Chukwuebuka Achibiri 
