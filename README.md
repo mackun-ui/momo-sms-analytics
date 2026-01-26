@@ -57,6 +57,10 @@ https://drive.google.com/file/d/15Wdv7dohUM3AlQf6I7Dvo1iaNmrMPi_R/view?usp=shari
 We are using GitHub Projects to track our progress. 
 https://github.com/users/mackun-ui/projects/1/views/1
 
+## Database Design Documentation
+Find a detailed explanation and justification for our database design
+https://docs.google.com/document/d/1YlG8lLbFWrPAKPrBINB1VzK7_x01HMSSdu5Z0dNaWBk/edit?usp=sharing
+
 ## Team Members
 - David Chukwuebuka Achibiri 
 - Manuelle Aseye Ackun
