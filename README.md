@@ -58,7 +58,7 @@ We are using GitHub Projects to track our progress.
 https://github.com/users/mackun-ui/projects/1/views/1
 
 ## Database Design Documentation
-Find a detailed explanation and justification for our database design
+Find a detailed explanation and justification for our database design. The SQL to JSON mapping can also be found in this documment.
 https://docs.google.com/document/d/1YlG8lLbFWrPAKPrBINB1VzK7_x01HMSSdu5Z0dNaWBk/edit?usp=sharing
 
 ## Team Members
