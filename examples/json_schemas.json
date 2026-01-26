@@ -1,0 +1,105 @@
+{
+    "USER": [
+        {
+            "user_id": 101,
+            "phone_number": "+233501234567",
+            "user_name": "Ama Mensah",
+            "account_type": "personal",
+            "network_provider": "MTN"
+        },
+        {
+            "user_id": 205,
+            "phone_number": "+233241112233",
+            "user_name": "Berima Kofi",
+            "account_type": "personal",
+            "network_provider": "Vodafone"
+        }
+    ],
+    "CATEGORY": [
+        {
+            "category_id": 1,
+            "category_name": "Peer-to-Peer Transfer",
+            "description": "Money sent from one user to another"
+        },
+        {
+            "category_id": 4,
+            "category_name": "Mobile Money",
+            "description": "General mobile money transaction"
+        }
+    ],
+    "TRANSACTION": [
+        {
+            "transaction_ID": "TXN20260125001",
+            "transaction_date": "2026-01-25T14:30:00",
+            "amount": 150.00,
+            "transaction_type": "Transfer",
+            "status": "Successful",
+            "reference_code": "MTN-MOMO-88291",
+            "sender_ID": 101,
+            "receiver_ID": 205
+        }
+    ],
+    "LOG": [
+        {
+            "log_ID": 9001,
+            "transaction_ID": "TXN20260125001",
+            "log_message": "SMS received",
+            "processing_status": "Parsed",
+            "log_timestamp": "2026-01-25T14:30:05"
+        },
+        {
+            "log_ID": 9002,
+            "transaction_ID": "TXN20260125001",
+            "log_message": "Transaction validated",
+            "processing_status": "Validated",
+            "log_timestamp": "2026-01-25T14:30:10"
+        }
+    ],
+    "complete_transaction_example": {
+        "transaction_ID": "TXN20260125001",
+        "transaction_date": "2026-01-25T14:30:00",
+        "amount": 150.00,
+        "transaction_type": "Transfer",
+        "status": "Succesful",
+        "reference_code": "MTN-MOMO-88291",
+
+        "sender": {
+            "user_id": 101,
+            "phone_number": "+233501234567",
+            "user_name": "Ama Mensah",
+            "account_type": "personal",
+            "network_provider": "MTN"
+        },
+        "receiver": {
+            "user_id": 205,
+            "phone_number": "+233241112233",
+            "user_name": "Berima Kofi",
+            "account_type": "personal",
+            "network_provider": "Vodafone"
+        },
+        "categories": [
+            {
+                "category_id": 1,
+                "category_name": "Peer-to-Peer Transfer"
+            },
+            {
+                "category_id": 4,
+                "category_name": "Mobile Money"
+            }
+        ],
+        "logs": [
+            {
+                "log_ID": 9001,
+                "log_message":"SMS received",
+                "processing_status": "Parsed",
+                "log_timestamp": "2026-01-25T14:30:05"
+            },
+            {
+                "log_ID": 9002,
+                "log_message": "Transaction validated",
+                "processing_status":"Validated",
+                "log_timestamp": "2026-01-25T14:30:10"
+            }
+        ]
+    }
+}
