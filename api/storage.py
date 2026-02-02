@@ -1,137 +1,101 @@
-
 class TransactionStorage:
     """
-    In-memory storage system for transactions using dictionary indexing.
-    Provides O(1) lookup time compared to O(n) for linear search.
+    Stores all our transactions in a dictionary so we can find them instantly.
+    Way better than searching through a list every time!
     """
     
     def __init__(self):
-        "Initialize empty storage."
-        self.transactions = {}  # Dictionary: {id: transaction}
-        self.next_id = 1
+        # Main storage - using a dict because it's O(1) for lookups
+        self.transactions = {}
+        self.next_id = 1  # Keep track of next available ID
     
     def load_transactions(self, transaction_list):
         """
-        Load transactions from a list into an indexed dictionary.
-        
-        Args:
-            transaction_list: List of transaction dictionaries
-            
-        Returns:
-            int: Number of transactions loaded
+        Takes a list of transactions and loads them into our dictionary.
+        This is where we convert from slow list to fast dict!
         """
         for transaction in transaction_list:
-            # Ensure each transaction has an ID
+            # Make sure every transaction has an ID
             if 'id' not in transaction:
                 transaction['id'] = self.next_id
                 self.next_id += 1
             
-            # Store in dictionary for fast lookup
-            self.transactions[transaction['id']] = transaction
+            # Convert string IDs to integers for consistency
+            trans_id = int(transaction['id']) if isinstance(transaction['id'], str) else transaction['id']
+            transaction['id'] = trans_id
             
-            # Update next_id to be one more than the highest ID
-            if transaction['id'] >= self.next_id:
-                self.next_id = transaction['id'] + 1
+            # Store it in our dictionary - this is the magic part!
+            self.transactions[trans_id] = transaction
+            
+            # Update next_id to avoid conflicts
+            if trans_id >= self.next_id:
+                self.next_id = trans_id + 1
         
         return len(self.transactions)
     
     def get_all(self):
-        """
-        Retrieve all transactions.
-        
-        Returns:
-            list: List of all transaction dictionaries
-        """
+        """Get all transactions as a list"""
         return list(self.transactions.values())
     
     def get_by_id(self, transaction_id):
         """
-        Fast O(1) lookup of transaction by ID using dictionary.
-        
-        Args:
-            transaction_id: ID of transaction to retrieve
-            
-        Returns:
-            dict: Transaction dictionary if found, None otherwise
+        This is the star of the show - O(1) lookup!
+        Just give me an ID and I'll find it instantly
         """
+        # Convert to int if needed
+        if isinstance(transaction_id, str):
+            transaction_id = int(transaction_id)
         return self.transactions.get(transaction_id)
     
     def add(self, transaction):
-        """
-        Add a new transaction to storage.
-        
-        Args:
-            transaction: Transaction dictionary to add
-            
-        Returns:
-            dict: The added transaction with assigned ID
-        """
-        # Assign new ID if not present
+        """Add a new transaction to storage"""
+        # Give it an ID if it doesn't have one
         if 'id' not in transaction or transaction['id'] is None:
             transaction['id'] = self.next_id
             self.next_id += 1
         
-        # Store transaction
-        self.transactions[transaction['id']] = transaction
+        # Convert ID to int
+        trans_id = int(transaction['id']) if isinstance(transaction['id'], str) else transaction['id']
+        transaction['id'] = trans_id
         
+        # Save it
+        self.transactions[trans_id] = transaction
         return transaction
     
     def update(self, transaction_id, updated_data):
-        """
-        Update an existing transaction.
-        
-        Args:
-            transaction_id: ID of transaction to update
-            updated_data: Dictionary with updated fields
+        """Update an existing transaction with new data"""
+        # Convert ID to int
+        if isinstance(transaction_id, str):
+            transaction_id = int(transaction_id)
             
-        Returns:
-            dict: Updated transaction if found, None otherwise
-        """
         if transaction_id not in self.transactions:
             return None
         
-        # Update transaction fields
+        # Update the fields
         transaction = self.transactions[transaction_id]
         transaction.update(updated_data)
-        # Ensure ID doesn't change
+        # Make sure the ID stays the same
         transaction['id'] = transaction_id
         
         return transaction
     
     def delete(self, transaction_id):
-        """
-        Delete a transaction by ID.
-        
-        Args:
-            transaction_id: ID of transaction to delete
-            
-        Returns:
-            dict: Deleted transaction if found, None otherwise
-        """
+        """Remove a transaction from storage"""
+        # Convert ID to int
+        if isinstance(transaction_id, str):
+            transaction_id = int(transaction_id)
         return self.transactions.pop(transaction_id, None)
     
     def exists(self, transaction_id):
-        """
-        Check if a transaction exists.
-        
-        Args:
-            transaction_id: ID to check
-            
-        Returns:
-            bool: True if transaction exists, False otherwise
-        """
+        """Check if a transaction exists"""
+        if isinstance(transaction_id, str):
+            transaction_id = int(transaction_id)
         return transaction_id in self.transactions
     
     def search_by_field(self, field, value):
         """
-        Search transactions by a specific field.
-        
-        Args:
-            field: Field name to search
-            value: Value to match
-            
-        Returns:
-            list: List of matching transactions
+        Find all transactions that match a certain field value.
+        Like finding all "SENT" transactions or all from a specific sender.
         """
         results = []
         for transaction in self.transactions.values():
@@ -140,75 +104,68 @@ class TransactionStorage:
         return results
     
     def get_count(self):
-        """
-        Get total number of transactions.
-        
-        Returns:
-            int: Number of transactions in storage
-        """
+        """How many transactions do we have?"""
         return len(self.transactions)
     
     def clear(self):
-        """Clear all transactions from storage"""
+        """Clear everything - start fresh"""
         self.transactions.clear()
         self.next_id = 1
 
 
 def linear_search(transaction_list, transaction_id):
     """
-    Linear search implementation - O(n) time complexity.
-    Scans through list sequentially to find matching ID.
-    
-    Args:
-        transaction_list: List of transaction dictionaries
-        transaction_id: ID to search for
-        
-    Returns:
-        dict: Transaction if found, None otherwise
+    The old-school way - check each transaction one by one.
+    This is slow but simple. O(n) means it takes longer as the list grows.
     """
+    # Convert ID to int if it's a string
+    if isinstance(transaction_id, str):
+        transaction_id = int(transaction_id)
+    
     for transaction in transaction_list:
-        if transaction.get('id') == transaction_id:
+        trans_id = transaction.get('id')
+        # Handle both string and int IDs
+        if isinstance(trans_id, str):
+            trans_id = int(trans_id)
+        if trans_id == transaction_id:
             return transaction
     return None
 
 
 def dictionary_lookup(transaction_dict, transaction_id):
     """
-    Dictionary lookup - O(1) time complexity.
-    Direct hash table lookup for instant retrieval.
-    
-    Args:
-        transaction_dict: Dictionary of transactions {id: transaction}
-        transaction_id: ID to search for
-        
-    Returns:
-        dict: Transaction if found, None otherwise
+    The fast way - go straight to the transaction using the ID as a key.
+    O(1) means it's always instant, no matter how many transactions we have!
     """
+    # Convert ID to int if needed
+    if isinstance(transaction_id, str):
+        transaction_id = int(transaction_id)
     return transaction_dict.get(transaction_id)
 
 
 def compare_search_methods(transactions, search_id):
     """
-    Compare efficiency of linear search vs dictionary lookup.
-    
-    Args:
-        transactions: List of transaction dictionaries
-        search_id: ID to search for
-        
-    Returns:
-        dict: Results with timing information
+    Let's race! Linear search vs dictionary lookup.
+    Spoiler: dictionary wins every time, especially with lots of data.
     """
     import time
     
-    # Build a dictionary for comparison
-    trans_dict = {t['id']: t for t in transactions}
+    # Convert ID to int for fair comparison
+    if isinstance(search_id, str):
+        search_id = int(search_id)
     
-    # Test linear search
+    # Build a dictionary from the list for comparison
+    trans_dict = {}
+    for t in transactions:
+        trans_id = int(t['id']) if isinstance(t['id'], str) else t['id']
+        trans_dict[trans_id] = t
+    
+    # Test linear search - checking each one
     start = time.perf_counter()
     result_linear = linear_search(transactions, search_id)
     time_linear = time.perf_counter() - start
     
-    # Test dictionary lookup
+    # Test dictionary lookup - direct access
     start = time.perf_counter()
     result_dict = dictionary_lookup(trans_dict, search_id)
     time_dict = time.perf_counter() - start
@@ -222,5 +179,5 @@ def compare_search_methods(transactions, search_id):
     }
 
 
-# Global storage instance for the API
+# Create a global storage instance that the API will use
 storage = TransactionStorage()
