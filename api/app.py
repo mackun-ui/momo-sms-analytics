@@ -17,14 +17,14 @@ class TransactionHandler(BaseHTTPRequestHandler):
         if data is not None:
             self.wfile.write(json.dumps(data).encode())
         
-    def _unauthorised(self):
+    def _unauthorized(self):
         self.send_response(401)
         self.send_header("WWW-Authenticate",'Basic realm="Secure Area"')
         self.end_headers()
 
     def _check_auth(self):
         if not is_authenticated(self.headers):
-            self._unauthorised()
+            self._unauthorized()
             return False
         return True
     
@@ -38,7 +38,7 @@ class TransactionHandler(BaseHTTPRequestHandler):
             try:
                 transaction_ID = int(self.path.split("/")[-1])
                 transaction = next(
-                    (t for t in transaction if t["id"] == transaction_ID),
+                    (t for t in transactions if t["id"] == transaction_ID),
                     None
                 )
 
@@ -56,9 +56,9 @@ class TransactionHandler(BaseHTTPRequestHandler):
         if self.path == "/transactions":
             content_length = int(self.headers["Content-Length"])
             body = self.rfile.read(content_length)
-            new_transaction = json.load(body)
+            new_transaction = json.loads(body)
 
-            new_transaction["id"] = len(transactions) + 1
+            new_transaction["id"] = max([t["id"] for t in transactions], default=0) + 1
             transactions.append(new_transaction)
 
             self._send_response(201, new_transaction)
@@ -72,6 +72,12 @@ class TransactionHandler(BaseHTTPRequestHandler):
             content_length = int(self.headers["Content-Length"])
             body = self.rfile.read(content_length)
             updated_data = json.loads(body)
+
+            try:
+                updated_data = json.loads(body.decode())
+            except json.JSONDecodeError:
+                self._send_response(400, {"error":"Invalid JSON"})
+                return
 
             for transaction in transactions:
                 if transaction["id"] == transaction_ID:
@@ -95,3 +101,8 @@ class TransactionHandler(BaseHTTPRequestHandler):
                     return
             
             self._send_response(404, {"error": "Transaction not found"})
+
+if __name__ == "__main__":
+    server = HTTPServer((HOST, PORT), TransactionHandler)
+    print(f"Server running at http://{HOST}:{PORT}")
+    server.serve_forever()

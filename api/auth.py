@@ -4,7 +4,7 @@ USERNAME = "admin"
 PASSWORD = "momosmsanalysis"
 
 def is_authenticated(headers):
-    auth_header = headers.get("Authorisation")
+    auth_header = headers.get("Authorization")
 
     if not auth_header or not auth_header.startswith("Basic "):
         return False
