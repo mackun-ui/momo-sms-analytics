@@ -62,3 +62,21 @@ class TransactionHandler(BaseHTTPRequestHandler):
             transactions.append(new_transaction)
 
             self._send_response(201, new_transaction)
+
+    def do_PUT(self):
+        if not self._check_auth():
+            return
+        
+        if self.path.startswith("/transactions/"):
+            transaction_ID = int(self.path.split("/")[-1])
+            content_length = int(self.headers["Content-Length"])
+            body = self.rfile.read(content_length)
+            updated_data = json.loads(body)
+
+            for transaction in transactions:
+                if transaction["id"] == transaction_ID:
+                    transaction.update(updated_data)
+                    self._send_response(200, transaction)
+                    return
+            
+            self._send_response(404, {"error": "Transaction not found"})
