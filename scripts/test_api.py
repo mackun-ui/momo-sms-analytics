@@ -8,7 +8,7 @@ from datetime import datetime
 class APITester:
     """Test suite for Transaction API"""
     
-    def __init__(self, base_url='http://localhost:8000', username='admin', password='password'):
+    def __init__(self, base_url='http://localhost:8000', username='admin', password='momosmsanalysis'):
         """
         Initialize API tester.
         
