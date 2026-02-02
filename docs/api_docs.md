@@ -69,7 +69,7 @@ Authorization: Basic YWRtaW46bW9tb3Ntc2FkanFz
 ```http
 POST /transactions HTTP/1.1
 Host: Localhost:8000
-Authorization Basic YWRtaW46bW9tb3Ntc2FkanFz
+Authorization: Basic YWRtaW46bW9tb3Ntc2FkanFz
 Content-Type: application/json
 
 {
@@ -77,7 +77,7 @@ Content-Type: application/json
     "receiver": "Nicole",
     "amount": 50,
     "type": "debit",
-    "timestamp": 2026-02-01T11:00:00
+    "timestamp": "2026-02-01T11:00:00"
 }
 ```
 - Response Example (201 Created):
