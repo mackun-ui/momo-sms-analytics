@@ -56,11 +56,15 @@ class TransactionHandler(BaseHTTPRequestHandler):
         if self.path == "/transactions":
             content_length = int(self.headers["Content-Length"])
             body = self.rfile.read(content_length)
-            new_transaction = json.loads(body)
+            try:
+               new_transaction = json.loads(body.decode("utf-8"))
+            except json.JSONDecodeError:
+                self._send_response (400, {"error":"Invalid JSON"})
+                return
 
             new_transaction["id"] = max([t["id"] for t in transactions], default=0) + 1
             transactions.append(new_transaction)
-
+            
             self._send_response(201, new_transaction)
 
     def do_PUT(self):
