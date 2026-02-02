@@ -27,3 +27,24 @@ class TransactionHandler(BaseHTTPRequestHandler):
             self._unauthorised()
             return False
         return True
+    
+    def do_GET(self):
+        if not self._check_auth():
+            return
+        
+        if self.path == "/transactions":
+            self._send_response(200, transactions)
+        elif self.path.startswith("/transactions/"):
+            try:
+                transaction_ID = int(self.path.split("/")[-1])
+                transaction = next(
+                    (t for t in transaction if t["id"] == transaction_ID),
+                    None
+                )
+
+                if transaction:
+                    self._send_response(200, transaction)
+                else: 
+                    self._send_response(404, {"error": "Transaction not found"})
+            except ValueError:
+                self._send_response(400, {"error" : "Invalid ID"})
