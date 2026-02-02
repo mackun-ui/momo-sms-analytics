@@ -80,3 +80,18 @@ class TransactionHandler(BaseHTTPRequestHandler):
                     return
             
             self._send_response(404, {"error": "Transaction not found"})
+    
+    def do_DELETE(self):
+        if not self._check_auth():
+            return
+        
+        if self.path.startswith("/transactions/"):
+            transaction_ID = int(self.path.split("/")[-1])
+
+            for transaction in transactions:
+                if transaction["id"] == transaction_ID:
+                    transactions.remove(transaction)
+                    self._send_response(200, {"message": "Transaction deleted"})
+                    return
+            
+            self._send_response(404, {"error": "Transaction not found"})
