@@ -332,7 +332,7 @@ if __name__ == '__main__':
     tester = APITester(
         base_url='http://localhost:8000',
         username='admin',
-        password='password'
+        password='momosmsanalysis'
     )
     
     print("""
